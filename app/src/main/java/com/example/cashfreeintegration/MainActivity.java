@@ -113,8 +113,9 @@ public class MainActivity extends AppCompatActivity {
 
                 Map<String, String> params = new HashMap<>();
 
+                // TODO: 22/06/2021 REQUIRED SECRET_KEY AND APP_ID FOR FURTHER TESTING...
                 params.put("Content-Type", "application/json");
-                params.put("x-client-id", BuildConfig.APPLICATION_ID);
+                params.put("x-client-id", "MERCHANT APP_ID");
                 params.put("x-client-secret", "YOUR_SECRET_KEY");
                 return params;
             }
@@ -141,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
                 for (String key : bundle.keySet()) {
                     if (bundle.getString(key) != null) {
                         Log.d(TAG, key + " : " + bundle.getString(key));
+
+                        // TODO: 22/06/2021 ON RECEIVE RESPONSE VERIFY SIGNATURE SEE DOC AT: https://dev.cashfree.com/payment-gateway/integrations/mobile-integration/android-sdk#step-6-verify-response  AND THEN CALL DO_PAYMENT METHOD
                     }
                 }
         }
@@ -257,7 +260,8 @@ public class MainActivity extends AppCompatActivity {
          * Also, as explained below you will need to change your appId to prod
          * credentials before publishing your app.
          */
-        String appId = BuildConfig.APPLICATION_ID;
+        // TODO: 22/06/2021 REQUIRED MERCHANT APP_ID FOR PASSING PARAMETER TO CASH_FREE SERVER
+        String appId = "MERCHANT APP ID";
         String orderId = "Order0001";
         String orderAmount = "1";
         String orderNote = "Test Order";
@@ -284,10 +288,10 @@ public class MainActivity extends AppCompatActivity {
         switch (currentMode) {
             case CARD:
                 params.put(PARAM_PAYMENT_OPTION, "card");
-                params.put(PARAM_CARD_NUMBER, "4434260000000008");
-                params.put(PARAM_CARD_YYYY, "2021");
-                params.put(PARAM_CARD_MM, "05");
-                params.put(PARAM_CARD_HOLDER, "CARD_HOLDER_NAME");
+                params.put(PARAM_CARD_NUMBER, "4111111111111111");
+                params.put(PARAM_CARD_YYYY, "2023");
+                params.put(PARAM_CARD_MM, "07");
+                params.put(PARAM_CARD_HOLDER, "TEST");
                 params.put(PARAM_CARD_CVV, "123");
                 break;
             case WALLET:
