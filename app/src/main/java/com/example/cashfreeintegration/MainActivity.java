@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.BuildConfig;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -13,10 +15,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.cashfree.pg.CFPaymentService;
 import com.cashfree.pg.ui.gpay.GooglePayStatusListener;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import static com.cashfree.pg.CFPaymentService.PARAM_APP_ID;
 import static com.cashfree.pg.CFPaymentService.PARAM_BANK_CODE;
 import static com.cashfree.pg.CFPaymentService.PARAM_CARD_CVV;
@@ -55,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
         try {
             getToken();
         } catch (JSONException e) {
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private void getToken() throws JSONException {
         JSONObject jsonBody = new JSONObject();
 
-        String URL= Constants.GEN_TEST_MODE_TOKEN;
+        String URL = Constants.GEN_TEST_MODE_TOKEN;
 
 
         jsonBody.put("orderId", 3);
@@ -76,20 +80,19 @@ public class MainActivity extends AppCompatActivity {
         jsonBody.put("orderAmount", 300);
 
 
-
         JsonObjectRequest tokenRequest = new JsonObjectRequest(Request.Method.POST, URL, jsonBody, response -> {
-            Log.d("tokenRes","abc"+response.toString());
+            Log.d("tokenRes", "abc" + response.toString());
 
-            String status,message,cftoken;
+            String status, message, cftoken;
 
 
             try {
-                status=  response.getString("status");
-                message=  response.getString("message");
-                cftoken=  response.getString("cftoken");
-                model= new TokenResponse(status,message,cftoken);
+                status = response.getString("status");
+                message = response.getString("message");
+                cftoken = response.getString("cftoken");
+                model = new TokenResponse(status, message, cftoken);
 
-                token= model.getCftoken();
+                token = model.getCftoken();
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -102,17 +105,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        )
+        ) {
 
-        {
 
             @Override
             public Map<String, String> getHeaders() {
 
                 Map<String, String> params = new HashMap<>();
 
-                params.put("Content-Type","application/json");
-                params.put("x-client-id",   BuildConfig.APPLICATION_ID);
+                params.put("Content-Type", "application/json");
+                params.put("x-client-id", BuildConfig.APPLICATION_ID);
                 params.put("x-client-secret", "YOUR_SECRET_KEY");
                 return params;
             }
@@ -168,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         if (view.getId() == R.id.phonePe_exists) {
             Toast.makeText(
                     MainActivity.this,
-                    CFPaymentService.getCFPaymentServiceInstance().doesPhonePeExist(MainActivity.this, stage)+"",
+                    CFPaymentService.getCFPaymentServiceInstance().doesPhonePeExist(MainActivity.this, stage) + "",
                     Toast.LENGTH_SHORT).show();
             return;
         } else if (view.getId() == R.id.gpay_ready) {
@@ -177,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 public void isReady() {
                     Toast.makeText(MainActivity.this, "Ready", Toast.LENGTH_SHORT).show();
                 }
+
                 @Override
                 public void isNotReady() {
                     Toast.makeText(MainActivity.this, "Not Ready", Toast.LENGTH_SHORT).show();
@@ -190,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
          * check the documentation for details on generating the token.
          * READ THIS TO GENERATE TOKEN: https://bit.ly/2RGV3Pp
          */
-
 
 
         CFPaymentService cfPaymentService = CFPaymentService.getCFPaymentServiceInstance();
@@ -262,8 +264,6 @@ public class MainActivity extends AppCompatActivity {
         String customerName = "John Doe";
         String customerPhone = "9900012345";
         String customerEmail = "test@gmail.com";
-
-
 
 
         Map<String, String> params = new HashMap<>();
