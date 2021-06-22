@@ -113,8 +113,8 @@ public class MainActivity extends AppCompatActivity {
 
                 // TODO: 22/06/2021 REQUIRED SECRET_KEY AND APP_ID FOR FURTHER TESTING...
                 params.put("Content-Type", "application/json");
-                params.put("x-client-id", "MERCHANT APP_ID");
-                params.put("x-client-secret", "YOUR_SECRET_KEY");
+                params.put("x-client-id", "1144885aaba436f7c7a3895b05884411");
+                params.put("x-client-secret", "7c77dd2a115d96266fd783bc60b2b21a9cda8db1");
                 return params;
             }
         };
@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
          * credentials before publishing your app.
          */
         // TODO: 22/06/2021 REQUIRED MERCHANT APP_ID FOR PASSING PARAMETER TO CASH_FREE SERVER
-        String appId = "MERCHANT APP ID";
+        String appId = "1144885aaba436f7c7a3895b05884411";
         String orderId = "Order0001";
         String orderAmount = "1";
         String orderNote = "Test Order";
