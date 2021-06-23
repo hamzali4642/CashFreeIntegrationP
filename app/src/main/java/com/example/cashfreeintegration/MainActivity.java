@@ -73,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
         String URL = Constants.GEN_TEST_MODE_TOKEN;
 
 
-        jsonBody.put("orderId", 3);
+        jsonBody.put("orderId", "Order0001");
         jsonBody.put("orderCurrency", "INR");
-        jsonBody.put("orderAmount", 300);
+        jsonBody.put("orderAmount", "1");
 
 
         JsonObjectRequest tokenRequest = new JsonObjectRequest(Request.Method.POST, URL, jsonBody, response -> {
@@ -91,9 +91,11 @@ public class MainActivity extends AppCompatActivity {
                 model = new TokenResponse(status, message, cftoken);
 
                 token = model.getCftoken();
+                Log.d("CFTOKEN", "getToken: "+token);
 
             } catch (JSONException e) {
                 e.printStackTrace();
+
             }
 
         }, error -> {
