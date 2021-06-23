@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 for (String key : bundle.keySet()) {
                     if (bundle.getString(key) != null) {
                         Log.d(TAG, key + " : " + bundle.getString(key));
+                        Log.d("respond", key + " : " + bundle.getString(key));
 
                         // TODO: 22/06/2021 ON RECEIVE RESPONSE VERIFY SIGNATURE SEE DOC AT: https://dev.cashfree.com/payment-gateway/integrations/mobile-integration/android-sdk#step-6-verify-response  AND THEN CALL DO_PAYMENT METHOD
                     }
