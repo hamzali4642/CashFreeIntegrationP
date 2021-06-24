@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     String token = "TOKEN_DATA";
     TokenResponse model;
 
+    String orderId;
+
 
     enum SeamlessMode {
         CARD, WALLET, NET_BANKING, UPI_COLLECT, PAY_PAL
@@ -59,6 +61,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        int min = 0;
+        int max = 900;
+
+        //Generate random int value from 50 to 100
+        System.out.println("Random value in int from "+min+" to "+max+ ":");
+        int random_int = (int)Math.floor(Math.random()*(max-min+1)+min);
+
+        orderId= "orderid"+random_int;
+
+
 
         try {
             getToken();
@@ -69,11 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void getToken() throws JSONException {
         JSONObject jsonBody = new JSONObject();
-
         String URL = Constants.GEN_TEST_MODE_TOKEN;
-
-
-        jsonBody.put("orderId", "Order0001");
+//        jsonBody.put("orderId", "Order0001");
+        jsonBody.put("orderId", orderId);
         jsonBody.put("orderCurrency", "INR");
         jsonBody.put("orderAmount", "1");
 
@@ -263,7 +273,8 @@ public class MainActivity extends AppCompatActivity {
          */
         // TODO: 22/06/2021 REQUIRED MERCHANT APP_ID FOR PASSING PARAMETER TO CASH_FREE SERVER
         String appId = Constants.TEST_APP_ID;
-        String orderId = "Order0001";
+        String orderID = orderId;
+//        String orderId = "Order0001";
         String orderAmount = "1";
         String orderNote = "Test Order";
         String customerName = "John Doe";
@@ -274,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
         Map<String, String> params = new HashMap<>();
 
         params.put(PARAM_APP_ID, appId);
-        params.put(PARAM_ORDER_ID, orderId);
+        params.put(PARAM_ORDER_ID, orderID);
         params.put(PARAM_ORDER_AMOUNT, orderAmount);
         params.put(PARAM_ORDER_NOTE, orderNote);
         params.put(PARAM_CUSTOMER_NAME, customerName);
