@@ -8,4 +8,9 @@ public class Constants {
     public static final String TEST_APP_ID="68367c871f078ba007ed5cfc776386";
     public static final String TEST_SECRET_KEY="5bc1777ccfd746d471c575b09a20845b9ea021b0";
 
+
+
+    String Test_Environment= "https://test.cashfree.com/billpay/checkout/post/submit";
+    String Production_Environment="https://www.cashfree.com/checkout/post/submit";
+
 }

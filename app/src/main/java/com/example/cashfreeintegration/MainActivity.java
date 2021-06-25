@@ -19,8 +19,16 @@ import com.cashfree.pg.ui.gpay.GooglePayStatusListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 import static com.cashfree.pg.CFPaymentService.PARAM_APP_ID;
 import static com.cashfree.pg.CFPaymentService.PARAM_BANK_CODE;
@@ -86,6 +94,81 @@ public class MainActivity extends AppCompatActivity {
         jsonBody.put("orderId", orderId);
         jsonBody.put("orderCurrency", "INR");
         jsonBody.put("orderAmount", "1");
+
+
+        JsonObjectRequest tokenRequest = new JsonObjectRequest(Request.Method.POST, URL, jsonBody, response -> {
+            Log.d("tokenRes", "abc" + response.toString());
+
+            String status, message, cftoken;
+
+
+            try {
+                status = response.getString("status");
+                message = response.getString("message");
+                cftoken = response.getString("cftoken");
+                model = new TokenResponse(status, message, cftoken);
+
+                token = model.getCftoken();
+                Log.d("CFTOKEN", "getToken: "+token);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+
+            }
+
+        }, error -> {
+
+            error.printStackTrace();
+            //TODO: handle failure
+        }
+
+
+        ) {
+
+
+            @Override
+            public Map<String, String> getHeaders() {
+
+                Map<String, String> params = new HashMap<>();
+
+                // TODO: 22/06/2021 REQUIRED SECRET_KEY AND APP_ID FOR FURTHER TESTING...
+                params.put("Content-Type", "application/json");
+                params.put("x-client-id",Constants.TEST_APP_ID );
+                params.put("x-client-secret", Constants.TEST_SECRET_KEY);
+                return params;
+            }
+        };
+
+
+        Volley.newRequestQueue(this).
+                add(tokenRequest).setRetryPolicy(
+                (new DefaultRetryPolicy(0, -1, 0))
+        );
+
+    }
+    private void submitDetails() throws JSONException, NoSuchAlgorithmException, InvalidKeyException {
+        JSONObject jsonBody = new JSONObject();
+        String URL = Constants.GEN_TEST_MODE_TOKEN;
+//        jsonBody.put("orderId", "Order0001");
+
+
+        Map<String, String> postData = new HashMap<>();
+
+//        postData.put("appId", appId);
+//        postData.put("orderId", ORDERID);
+//        postData.put("orderAmount", ORDERAMOUNT);
+//        postData.put("orderNote", ORDERNOTE);
+//        postData.put("customerName", CUSTOMER_NAME);
+//        postData.put("customerEmail", CUSTOMER_EMAIL);
+//        postData.put("customerPhone", CUSTOMER_PHONE);
+             // card_number             // Sixteen digit card number. No spaces or hyphens accepted.
+            // card_expiryMonth        //Expiration month for the card, in MM format.
+           //card_expiryYear          // Expiration year for the card, in YYYY format.
+          //card_cvv                 //CVV number of the card
+         //card_holder              // Name of the card holder
+        //paymentOption   //'card' for Debit/Credit Cards
+        postData.put("paymentOption", "card");
+        postData.put("paymentCode", "3333");
 
 
         JsonObjectRequest tokenRequest = new JsonObjectRequest(Request.Method.POST, URL, jsonBody, response -> {
